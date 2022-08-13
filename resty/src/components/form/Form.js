@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import './form.scss';
-function Form(props) {
 
+function Form(props) {
     const [click, setClick] = useState('Get');
     const [url, setUrl] = useState('');
     const [body, setBody] = useState({});
-
 
     const handleSubmit = e => {
         e.preventDefault();

@@ -1,32 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import './form.scss';
 function Form(props) {
+
+    const [click, setClick] = useState('Get');
+    const [url, setUrl] = useState('');
+    const [body, setBody] = useState({});
+
 
     const handleSubmit = e => {
         e.preventDefault();
         const formData = {
-            method: e.target[1].value,
-            url: e.target[0].value
+            method: click,
+            url: url,
+            headers: {
+                'Content-Type': 'application/json',
+              },
+            
         };
-        props.handleApiCall(formData);
+        const bodyData = {
+            body: body
+        };
+        props.handleApiCall(formData,bodyData);
     }
 
-    return ( <> <form onSubmit={handleSubmit}>
-        <label className='label-input'>
-            <span>URL:
-            </span>
-            <input name='url' type='text' className='input'/>
-        </label>
-        <label className="methods">Choose a method:</label>
+    const handelClick = e => {
+        e.preventDefault();
+        setClick(e.target.value);
+    }
 
-        <select className="methods">
-            <option value="get">Get</option>
-            <option value="post">Post</option>
-            <option value="update">Update</option>
-            <option value="delete">Delete</option>
-        </select>
-        <button type="submit" className='btn'>GO!</button>
-    </form> </>
+    const handelUrl = e => {
+        e.preventDefault();
+        setUrl(e.target.value);
+    }
+    const handelBody = e => {
+        e.preventDefault();
+        setBody(e.target.value);
+        // console.log("*********",e.target.value);
+    }
+
+    return (
+        <>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <span>URL: </span>
+                    <input name='url' type='text' className='input' placeholder='please inter your url' data-testid='input' 
+                    onChange={handelUrl} />
+                    <button type="submit" className='btn' data-testid='submit'>GO!</button>
+                </label>
+
+                <label className="methods">
+                    <div>
+                        <button id="get" data-testid='get' onClick={handelClick} value='GET'>GET</button>
+                        <button id="post" data-testid='post' onClick={handelClick} value='POST'>POST</button>
+                        <button id="put" data-trestid='put' onClick={handelClick} value='PUT'>PUT</button>
+                        <button id="delete" onClick={handelClick} value='DELETE'>DELETE</button>
+                    </div>
+                </label>
+                {click === 'POST' || click === 'PUT' ? <input type='JSON' onChange={handelBody}
+                 placeholder='please enter your json data like object' /> : null}
+            </form>
+        </>
     )
 }
 export default Form;

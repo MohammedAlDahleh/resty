@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
-// import { Component } from 'react';
-
 import './app.scss';
+import React, { useState } from 'react';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
-
 function App() {
+  const [data, setData] = useState(null);
+  const [reqParams, setReqParams] = useState({});
+  const [bodyData, setBodyData] = useState({});
+  const [headers, setHeaders] = useState({});
 
-  const [state, setState] = useState({ data: null, requestParams: {}, })
-  const callApi = (requestParams) => {
-    const data = {
-      count: 2,
-      results: [
-        { name: 'fake thing 1', url: 'http://fakethings.com/1' },
-        { name: 'fake thing 2', url: 'http://fakethings.com/2' },
-      ],
+  const callApi = async (reqParams, bodyParams) => {
+    const response = await fetch(reqParams.url);
+    const data = await response.json();
+    // console.log("data",data);
+    // console.log("res",response);
+
+    setData(data);
+    setReqParams(reqParams);
+    const body = {
+      body: bodyParams.body,
     };
-    setState({ data, requestParams });
+    const headers = {
+      headers: reqParams.headers,
+    };
+    setBodyData(body);
+    setHeaders(headers);
   }
-
   return (
     <>
       <Header />
-      <div className='req'>Request Method: {state.requestParams.method}</div>
-      <div className='url'>URL: {state.requestParams.url}</div>
+      <div className='url'>URL: {reqParams.url}</div>
+      <div className='req'>Request Method: {reqParams.method}</div>
       <Form handleApiCall={callApi} />
-      <Results data={state.data} />
+      <Results data={data} method={reqParams.method} bodyData={bodyData} headers={headers}/>
       <Footer />
     </>
   )

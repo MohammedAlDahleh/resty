@@ -1,32 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios';
+
 import './form.scss';
-function Form(props) {
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        const formData = {
-            method: e.target[1].value,
-            url: e.target[0].value
-        };
-        props.handleApiCall(formData);
+function Form({ callApi,setData }) {
+    const [method, setMethod] = useState('GET');
+    const handleSubmit = event => {
+      event.preventDefault();
+      const formData = {
+        method:method,
+        url: event.target[0].value,
+      };
+      callApi(formData);
+  
+        axios.get(event.target[0].value)
+        .then(res => {
+          const persons = res.data;
+          setData(persons)
+        }).catch((err)=>{
+        //   console.log(err);
+        console.log(err);
+        setData({stauts:"loading..."})
+        });
     }
-
-    return ( <> <form onSubmit={handleSubmit}>
-        <label className='label-input'>
-            <span>URL:
-            </span>
-            <input name='url' type='text' className='input'/>
-        </label>
-        <label className="methods">Choose a method:</label>
-
-        <select className="methods">
-            <option value="get">Get</option>
-            <option value="post">Post</option>
-            <option value="update">Update</option>
-            <option value="delete">Delete</option>
-        </select>
-        <button type="submit" className='btn'>GO!</button>
-    </form> </>
-    )
-}
-export default Form;
+  
+      return (
+        <>
+          <form onSubmit={handleSubmit}>
+            <label >
+              <span>URL: </span>
+              <input name='url' type='text' /> 
+              <button type="submit">GO!</button>
+            </label>
+            <label className="methods">
+              <span onClick={()=>setMethod('GET')} id="get">GET</span>
+              <span onClick={()=>setMethod('POST')} id="post">POST</span>
+              <span onClick={()=>setMethod('PUT')} id="put">PUT</span>
+              <span onClick={()=>setMethod('DELETE')} id="delete">DELETE</span>
+            </label>
+              {method==='POST'||method==='PUT'?<input name='text' type='text'/>:null}
+          </form>
+        </>
+      );
+  }
+  
+  export default Form;

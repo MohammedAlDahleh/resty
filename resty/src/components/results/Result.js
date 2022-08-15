@@ -1,12 +1,10 @@
 import React from "react";
-
+import JSONPretty from "react-json-pretty";
 function Result(props) {
     return (
-    <>
-     <section>
-        <pre>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
-      </section>
-    </>
+      <>
+      <JSONPretty id = "json-prety" data={props.data}></JSONPretty>
+      </>
     )
 }
 export default Result;

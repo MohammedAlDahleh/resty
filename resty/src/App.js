@@ -15,22 +15,16 @@ function App() {
     const data = await response.json();
     // console.log("data",data);
     // console.log("res",response);
-
     setData(data);
     setReqParams(reqParams);
-    const body = {
-      body: bodyParams.body,
-    };
+    const body = {body: bodyParams.body,};
     // console.log("bodyyyyy",bodyParams.body)
-
-    const headers = {
-      headers: reqParams.headers,
-    };
+    const headers = {headers: reqParams.headers,};
     // console.log("header",reqParams.headers)
-    
     setBodyData(body);
     setHeaders(headers);
   }
+
   return (
     <>
       <Header />

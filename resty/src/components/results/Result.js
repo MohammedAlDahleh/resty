@@ -6,7 +6,7 @@ function Result(props) {
   let body = props.bodyData.body;
   let headers = props.headers.headers;
   if (!props.loading) {
-
+    
     return (
       <>
         <section data-testid='result'>
@@ -16,14 +16,14 @@ function Result(props) {
         <br/>
           {
             props.method === 'GET'
-              ? JSON.stringify(props.data, undefined, '\t')
-              : props.method === 'POST'
-                ? body
-                : props.method === 'PUT'
-                  ? body
-                  : props.method === 'DELETE'
-                    ? 'Deleted'
-                    : <div className='loader'></div>}
+            ? JSON.stringify(props.data, undefined, '\t')
+            : props.method === 'POST'
+            ? body
+            : props.method === 'PUT'
+            ? body
+            : props.method === 'DELETE'
+            ? 'Deleted'
+            : <div className='loader'></div>}
         </section> </>
     )
   } else {

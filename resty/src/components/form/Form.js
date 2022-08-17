@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import axios from 'axios';
 
 import './form.scss';
 
 function Form({ callApi, setData }) {
     const [method, setMethod] = useState({ method: 'GET' });
+    const [body,setBody]=useState('');
     const handleSubmit = event => {
         event.preventDefault();
         const formData = {
             method: method,
             url: event.target[0].value,
+            body: body,
+
         };
         callApi(formData);
-
-        // axios.get(event.target[0].value)
-        //     .then(res => {
-        //         const persons = res.data;
-        //         setData(persons)
-        //     }).catch((err) => {
-        //         console.log(err);
-        //         setData({ stauts: "loading..." })
-        //     });
     }
+    function updateBody(e){
+        setBody(e.target.value)
+      }
    
 
     return (
@@ -38,7 +35,7 @@ function Form({ callApi, setData }) {
                     <span onClick={() => setMethod('PUT')} id="put">PUT</span>
                     <span onClick={() => setMethod('DELETE')} id="delete">DELETE</span>
                 </label>
-                {method === 'POST' || method === 'PUT' ? <input name='text' type='text' /> : null}
+                {method === 'POST' || method === 'PUT' ? <input onInput={updateBody} name='text' type='text' /> : null}
             </form>
         </>
     );

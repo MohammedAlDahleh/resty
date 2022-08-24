@@ -6,17 +6,25 @@ import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
 function App() {
-  const [state, setState] = useState({ requestParams: {} });
+  const [http, setHttp] = useState({ requestParams: {} });
   const [data, setData] = useState('');
-  const[statee,dispatch] =useReducer(historyReducer, initialState);
+  const[state,dispatch] =useReducer(historyReducer, 0);
+
+
+  function historyReducer(state,action){
+    state = console.log("historyReducer")  ;
+  }
+  
+
+
 
   const callApi = (formData) => {
-    setState({ ...state, requestParams: formData });
+    setHttp({ ...http, requestParams: formData });
   }
  
-  let method = state.requestParams.method;
-  let url = state.requestParams.url
-  let body = state.requestParams.body;
+  let method = http.requestParams.method;
+  let url = http.requestParams.url
+  let body = http.requestParams.body;
   useEffect(() => {
     if (method) {
       //////////////////////Get/////////////
@@ -60,14 +68,19 @@ function App() {
       console.log("please enter your method");
     }
 
-  }, [state])
+  }, [http])
   return (
     <>
       <Header />
-      <div>Request Method: {state.requestParams.method}</div>
-      <div>URL: {state.requestParams.url}</div>
+      <div>Request Method: {http.requestParams.method}</div>
+      <div>URL: {http.requestParams.url}</div>
       <Form callApi={callApi} setData={setData}  /> 
       <Results data={data} />
+      <div>
+        {
+          <button onClick={()=>dispatch({historyReducer})}>history</button>
+        }
+      </div>
       <Footer />
     </>
   );

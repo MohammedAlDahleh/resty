@@ -1,14 +1,13 @@
-import React from 'react';
-import { Component } from 'react';
-
 import './app.scss';
+
+import React, { Component } from 'react';
 import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
+import Footer from './components/footer/Footer';
+
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -22,17 +21,16 @@ class App extends Component {
     const data = {
       count: 2,
       results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
+        { name: 'fake thing 1', url: 'http://fakethings.com/1' },
+        { name: 'fake thing 2', url: 'http://fakethings.com/2' },
       ],
     };
-    this.setState({data, requestParams});
+    this.setState({ data, requestParams });
   }
-
   render() {
     return (
       <>
-        <Header />  
+        <Header />
         <div className='req'>Request Method: {this.state.requestParams.method}</div>
         <div className='url'>URL: {this.state.requestParams.url}</div>
         <Form handleApiCall={this.callApi} />

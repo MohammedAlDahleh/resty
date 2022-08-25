@@ -1,5 +1,6 @@
-import React from "react";
-import './form.scss';
+import React from 'react'
+import './form.css'
+
 function Form(props) {
 
     const handleSubmit = e => {
@@ -16,8 +17,8 @@ function Form(props) {
             <form onSubmit={handleSubmit}>
                 <label className='label-input'>
                     <span>URL: </span>
-                    <input name='url' type='text' className='input'/>
-                    <button type="submit"  className='btn'>GO!</button>
+                    <input name='url' type='text' className='input' />
+                    <button type="submit" className='btn'>GO!</button>
                 </label>
                 <label className="methods">
                     <span id="get">GET</span>
@@ -29,4 +30,5 @@ function Form(props) {
         </>
     )
 }
-export default Form;
+
+export default Form

@@ -1,21 +1,41 @@
-import React, { useState } from 'react';
-import './app.scss';
+
+import React, { useState, useEffect } from 'react';
+import './app.css';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
 
-    
 function App() {
   const [data, setData] = useState(null);
   const [reqParams, setReqParams] = useState({});
   const [bodyData, setBodyData] = useState({});
   const [headers, setHeaders] = useState({});
 
+
+  useEffect(() => {
+    if (data || reqParams || bodyData || headers) {
+      setReqParams(reqParams);
+      setBodyData(bodyData);
+      setHeaders(headers);
+      setData(data);
+    }
+    return () => {
+      setData(null);
+      setReqParams({});
+      setBodyData({});
+      setHeaders({});
+    };
+  }, [data, reqParams, bodyData, headers]);
+
+
   const callApi = async (reqParams, bodyParams) => {
     const response = await fetch(reqParams.url);
     const data = await response.json();
-    setData(data);
+
+    const record = "Response: " + JSON.stringify(data, null, 2);
+    setData(record);
+
     setReqParams(reqParams);
     const body = {
       body: bodyParams.body,
@@ -23,17 +43,19 @@ function App() {
     const headers = {
       headers: reqParams.headers,
     };
-    console.log('headers', headers);
+
     setBodyData(body);
     setHeaders(headers);
   }
   return (
     <>
       <Header />
-      <div >URL: {reqParams.url}</div>
-      <div >Request Method: {reqParams.method}</div>
+
+      <div className='url'>URL: {reqParams.url}</div>
+      <div className='req'>Request Method: {reqParams.method}</div>
       <Form handleApiCall={callApi} />
-      <Results data={data} method={reqParams.method} bodyData={bodyData} headers={headers} />
+      <Results Response={data} method={reqParams.method} bodyData={bodyData} headers={headers} />
+
       <Footer />
     </>
   )

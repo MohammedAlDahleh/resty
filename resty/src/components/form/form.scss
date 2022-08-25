@@ -9,30 +9,46 @@ form {
   padding: 1em;
   background: $backgroundColor;
   opacity: 95%;
-
-  .label-input {
-    display: flex;
-    grid-gap: 0.5em;
-  }
-
-  .input {
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    padding: 0.5em;
-    width: 100%;
-    justify-content: center;
+  .text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
     align-items: center;
+    justify-items: center;
+    min-height: 100px;
+    outline: none;
+    resize: none;
+    font-family: monospace;
+    transition: background 0.25s, color 0.25s;
+    &:focus {
+      background: #4a4a4a;
+      color: #eeeeee;
+    }
+    &:hover {
+      background: #4a4a4a;
+      color: #eeeeee;
+    }
   }
 
-  .btn {
+  .label-input-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+    margin-bottom: 1em;
+    min-height: 100px;
+  }
+
+
     border-radius: 15px;
     border: 1px solid #ccc;
     padding: 0.5em;
     width: 30%;
     justify-content: center;
     align-items: center;
+    &:hover {
+      background: burlywood
+    }
+
   }
 
   label {
@@ -42,70 +58,71 @@ form {
     align-items: center;
 
     &.methods {
-      span {
-        cursor: pointer;
-        margin-right: 1rem;
-        padding: 0.25rem 0.5rem;
-        background: $backgroundColor;
-      }
-
-      #get {
-        border-radius: $radius;
-        border: 1px solid $backgroundColor;
-        color: $backgroundColor;
-        font-weight: bold;
-        margin-right: 1rem;
-        padding: 0.25rem 0.5rem;
-        background: green;
-
-        &:hover {
-          background: lightgreen;
-          color: black;
+      .btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        #get {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: green;
+          width: auto;
+          &:hover {
+            background: lightgreen;
+            color: black;
+          }
         }
-      }
-
-      #post {
-        border-radius: $radius;
-        border: 1px solid $backgroundColor;
-        color: $backgroundColor;
-        font-weight: bold;
-        margin-right: 1rem;
-        padding: 0.25rem 0.5rem;
-        background: blue;
-
-        &:hover {
-          background: lightskyblue;
-          color: black;
+        #post {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: blue;
+          width: auto;
+          &:hover {
+            background: lightskyblue;
+            color: black;
+          }
         }
-      }
-
-      #put {
-        border-radius: $radius;
-        border: 1px solid $backgroundColor;
-        color: $backgroundColor;
-        font-weight: bold;
-        margin-right: 1rem;
-        padding: 0.25rem 0.5rem;
-        background: yellow;
-
-        &:hover {
-          background: lightgoldenrodyellow;
-          color: black;
+        #put {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: yellow;
+          width: auto;
+          &:hover {
+            background: lightgoldenrodyellow;
+            color: black;
+          }
         }
-      }
+        #delete {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: red;
+          width: auto;
+          &:hover {
+            background: lightcoral;
+            color: black;
+          }
 
-      #delete {
-        border-radius: $radius;
-        border: 1px solid $backgroundColor;
-        color: $backgroundColor;
-        font-weight: bold;
-        margin-right: 1rem;
-        padding: 0.25rem 0.5rem;
-        background: red;
-
-        &:hover {
-          background: lightcoral;
-          color: black;
         }
       }
     }

@@ -9,7 +9,6 @@ form {
   padding: 1em;
   background: $backgroundColor;
   opacity: 95%;
-
   .text {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -39,24 +38,7 @@ form {
     min-height: 100px;
   }
 
-  .label-input {
-    display: flex;
-    grid-gap: 0.5em;
-  }
 
-  .input {
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    padding: 0.5em;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .btn {
-    cursor: pointer;
     border-radius: 15px;
     border: 1px solid #ccc;
     padding: 0.5em;
@@ -64,8 +46,9 @@ form {
     justify-content: center;
     align-items: center;
     &:hover {
-      background: burlywood;
+      background: burlywood
     }
+
   }
 
   label {
@@ -139,6 +122,7 @@ form {
             background: lightcoral;
             color: black;
           }
+
         }
       }
     }

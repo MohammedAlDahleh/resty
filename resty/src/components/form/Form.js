@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import './form.css'
 
@@ -53,6 +54,7 @@ function Form(props) {
             <button id="delete" onClick={handelClick} value='DELETE'>DELETE</button>
           </div>
         </label>
+
         {click === 'POST' || click === 'PUT' ? <textarea className='text' onChange={handleBody} /> : null}
       </form>
     </>

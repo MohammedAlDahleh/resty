@@ -1,46 +1,42 @@
-
+import React, { useState } from 'react';
 import './app.scss';
-
-import React, { Component } from 'react';
 import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
-  
-import Footer from './components/footer/Footer';
 
+    
+function App() {
+  const [data, setData] = useState(null);
+  const [reqParams, setReqParams] = useState({});
+  const [bodyData, setBodyData] = useState({});
+  const [headers, setHeaders] = useState({});
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
+  const callApi = async (reqParams, bodyParams) => {
+    const response = await fetch(reqParams.url);
+    const data = await response.json();
+    setData(data);
+    setReqParams(reqParams);
+    const body = {
+      body: bodyParams.body,
     };
-  }
-
-  callApi = (requestParams) => {
-    // mock output
-    const data = {
-      count: 2,
-      results: [
-        { name: 'fake thing 1', url: 'http://fakethings.com/1' },
-        { name: 'fake thing 2', url: 'http://fakethings.com/2' },
-      ],
+    const headers = {
+      headers: reqParams.headers,
     };
-    this.setState({ data, requestParams });
+    console.log('headers', headers);
+    setBodyData(body);
+    setHeaders(headers);
   }
-  render() {
-    return (
-      <>
-        <Header />
-        <div className='req'>Request Method: {this.state.requestParams.method}</div>
-        <div className='url'>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </>
-    );
-  }
+  return (
+    <>
+      <Header />
+      <div >URL: {reqParams.url}</div>
+      <div >Request Method: {reqParams.method}</div>
+      <Form handleApiCall={callApi} />
+      <Results data={data} method={reqParams.method} bodyData={bodyData} headers={headers} />
+      <Footer />
+    </>
+  )
 }
 
-export default App;
+export default App

@@ -1,9 +1,11 @@
+
 import './app.scss';
 
 import React, { Component } from 'react';
 import Header from './components/header/Header';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
+  
 import Footer from './components/footer/Footer';
 
 

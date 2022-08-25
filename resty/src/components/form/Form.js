@@ -1,47 +1,61 @@
 import React, { useState } from "react";
-import axios from 'axios';
-
 import './form.scss';
 
-function Form({ callApi,setData }) {
-    const [method, setMethod] = useState('GET');
-    const handleSubmit = event => {
-      event.preventDefault();
-      const formData = {
-        method:method,
-        url: event.target[0].value,
-      };
-      callApi(formData);
-  
-        axios.get(event.target[0].value)
-        .then(res => {
-          const persons = res.data;
-          setData(persons)
-        }).catch((err)=>{
-        //   console.log(err);
-        console.log(err);
-        setData({stauts:"loading..."})
-        });
-    }
-  
-      return (
-        <>
-          <form onSubmit={handleSubmit}>
-            <label >
-              <span>URL: </span>
-              <input name='url' type='text' /> 
-              <button type="submit">GO!</button>
-            </label>
-            <label className="methods">
-              <span onClick={()=>setMethod('GET')} id="get">GET</span>
-              <span onClick={()=>setMethod('POST')} id="post">POST</span>
-              <span onClick={()=>setMethod('PUT')} id="put">PUT</span>
-              <span onClick={()=>setMethod('DELETE')} id="delete">DELETE</span>
-            </label>
-              {method==='POST'||method==='PUT'?<input name='text' type='text'/>:null}
-          </form>
-        </>
-      );
+
+function Form(props) {
+  const [click, setClick] = useState('GET');
+  const [url, setUrl] = useState('');
+  const [body, setBody] = useState('');
+
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formData = {
+      method: click,
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const bodyData = {
+      body: body,
+    };
+    props.handleApiCall(formData, bodyData);
   }
-  
-  export default Form;
+
+  const handelClick = e => {
+    e.preventDefault();
+    setClick(e.target.value);
+  }
+  const handelUrl = e => {
+    e.preventDefault();
+    setUrl(e.target.value);
+  }
+  const handleBody = e => {
+    e.preventDefault();
+    setBody(e.target.value);
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <span>URL: </span>
+          <input name='url' type='text'placeholder='Inter a URL' data-testid='input' onChange={handelUrl} />
+          <button type="submit"  data-testid='submit'>GO!</button>
+        </label>
+        <label className="methods">
+          <div>
+            <button id="get" data-testid='get' onClick={handelClick} value='GET'>GET</button>
+            <button id="post" data-testid='post' onClick={handelClick} value='POST'>POST</button>
+            <button id="put" data-testid='put' onClick={handelClick} value='PUT'>PUT</button>
+            <button id="delete" onClick={handelClick} value='DELETE'>DELETE</button>
+          </div>
+        </label>
+        {click === 'POST' || click === 'PUT' ? <textarea onChange={handleBody} /> : null}
+      </form>
+    </>
+  )
+}
+
+export default Form;

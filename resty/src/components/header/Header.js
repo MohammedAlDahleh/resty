@@ -1,18 +1,9 @@
-import React from "react";
+import React from 'react'
 
 function Header() {
-    return (
-        <>
-            <header>
-                <h1 data-testid='header'>RESTy</h1>
-                <nav>
-                    <a href="/"> Home </a>
-                    <a href="/"> History</a>
-                    <a href="/"> Help</a>
-                </nav>
-            </header>
-        </>
-    )
+  return (
+    <header data-testid='header'>RESTy</header>
+  )
 }
 
-export default Header; 
+export default Header

@@ -1,44 +1,35 @@
-import React, { useState } from "react";
-// import axios from 'axios';
 
-import './form.scss';
+import React from 'react'
+import './form.css'
 
-function Form({ callApi, setData }) {
-    const [method, setMethod] = useState({ method: 'GET' });
-    const [body,setBody]=useState('');
-    const handleSubmit = event => {
-        event.preventDefault();
-        const formData = {
-            method: method,
-            url: event.target[0].value,
-            body: body,
+function Form(props) {
 
-        };
-        callApi(formData);
-    }
-    function updateBody(e){
-        setBody(e.target.value)
-      }
-   
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formData = {
+      method: 'GET',
+      url: 'https://pokeapi.co/api/v2/pokemon',
+    };
+    props.handleApiCall(formData);
+  }
 
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <label >
-                    <span>URL: </span>
-                    <input name='url' type='text' />
-                    <button type="submit">GO!</button>
-                </label>
-                <label className="methods">
-                    <span onClick={() => setMethod('GET')} id="get">GET</span>
-                    <span onClick={() => setMethod('POST')} id="post">POST</span>
-                    <span onClick={() => setMethod('PUT')} id="put">PUT</span>
-                    <span onClick={() => setMethod('DELETE')} id="delete">DELETE</span>
-                </label>
-                {method === 'POST' || method === 'PUT' ? <input onInput={updateBody} name='text' type='text' /> : null}
-            </form>
-        </>
-    );
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <label className='label-input'>
+          <span>URL: </span>
+          <input name='url' type='text' className='input' />
+          <button type="submit" className='btn'>GO!</button>
+        </label>
+        <label className="methods">
+          <span id="get">GET</span>
+          <span id="post">POST</span>
+          <span id="put">PUT</span>
+          <span id="delete">DELETE</span>
+        </label>
+      </form>
+    </>
+  )
 }
 
-export default Form;
+export default Form

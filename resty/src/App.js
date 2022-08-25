@@ -1,50 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import './app.scss';
+import './app.css';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
-function App() {
-  const [state, setState] = useState({ requestParams: {} });
-  const [data, setData] = useState('')
-  const callApi = (formData) => {
-    setState({ ...state, requestParams: formData });
-  }
-  let method = state.requestParams.method;
-  useEffect(() => {
-    if (method) {
-      if (method == 'GET') {
-        axios.get(state.requestParams.url)
-          .then(res => {
-            const persons = res.data;
-            setData(persons)
-          }).catch((err) => {
-            console.log(err);
-            setData({ stauts: "loading..." })
-          });
-      } if (method === 'POST') {
-        console.log('POST');
-      } if (method === 'PUT') {
-        console.log('PUT');
-      } if (method === 'DELETE') {
-        console.log('DELETE');
-      }
-    } else {
-      console.log("please enter your method");
-    }
 
-  }, [method])
+
+function App() {
+  const [data, setData] = useState(null);
+  const [reqParams, setReqParams] = useState({});
+  const [bodyData, setBodyData] = useState({});
+  const [headers, setHeaders] = useState({});
+
+  useEffect(() => {
+    if (data || reqParams || bodyData || headers) {
+      setReqParams(reqParams);
+      setBodyData(bodyData);
+      setHeaders(headers);
+      setData(data);
+    }
+    return () => {
+      setData(null);
+      setReqParams({});
+      setBodyData({});
+      setHeaders({});
+    };
+  }, [data, reqParams, bodyData, headers]);
+
+  const callApi = async (reqParams, bodyParams) => {
+    const response = await fetch(reqParams.url);
+    const data = await response.json();
+    const record = "Response: " + JSON.stringify(data, null, 2);
+    setData(record);
+    setReqParams(reqParams);
+    const body = {
+      body: bodyParams.body,
+    };
+    const headers = {
+      headers: reqParams.headers,
+    };
+    setBodyData(body);
+    setHeaders(headers);
+  }
   return (
     <>
       <Header />
-      <div>Request Method: {state.requestParams.method}</div>
-      <div>URL: {state.requestParams.url}</div>
-      <Form callApi={callApi} setData={setData} />
-      <Results data={data} />
+      <div className='url'>URL: {reqParams.url}</div>
+      <div className='req'>Request Method: {reqParams.method}</div>
+      <Form handleApiCall={callApi} />
+      <Results Response={data} method={reqParams.method} bodyData={bodyData} headers={headers} />
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

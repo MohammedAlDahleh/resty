@@ -1,24 +1,144 @@
-$backgroundColor: #efefef;
+$backgroundColor: #8b8b8b;
 $radius: 40%;
 
 form {
-  display: inline-block;
+  display: grid;
   margin: auto;
-  width: 200px;
+  margin-top: 2%;
+  max-width: 500px;
+  padding: 1em;
+  background: $backgroundColor;
+  opacity: 95%;
+
+  .text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+    align-items: center;
+    justify-items: center;
+    min-height: 100px;
+    outline: none;
+    resize: none;
+    font-family: monospace;
+    transition: background 0.25s, color 0.25s;
+    &:focus {
+      background: #4a4a4a;
+      color: #eeeeee;
+    }
+    &:hover {
+      background: #4a4a4a;
+      color: #eeeeee;
+    }
+  }
+
+  .label-input-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+    margin-bottom: 1em;
+    min-height: 100px;
+  }
+
+  .label-input {
+    display: flex;
+    grid-gap: 0.5em;
+  }
+
+  .input {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn {
+    cursor: pointer;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    width: 30%;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background: burlywood;
+    }
+  }
 
   label {
     display: flex;
     margin: 1rem 0;
+    justify-content: center;
+    align-items: center;
 
     &.methods {
-      span {
-        cursor: pointer;
-        margin-right: 1rem;
-        padding: .25rem .5rem;
-        background: #ccc;
-
-        &:hover, &.active {
+      .btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        #get {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
           background: green;
+          width: auto;
+          &:hover {
+            background: lightgreen;
+            color: black;
+          }
+        }
+        #post {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: blue;
+          width: auto;
+          &:hover {
+            background: lightskyblue;
+            color: black;
+          }
+        }
+        #put {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: yellow;
+          width: auto;
+          &:hover {
+            background: lightgoldenrodyellow;
+            color: black;
+          }
+        }
+        #delete {
+          cursor: pointer;
+          border-radius: $radius;
+          border: 1px solid $backgroundColor;
+          color: $backgroundColor;
+          font-weight: bold;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: red;
+          width: auto;
+          &:hover {
+            background: lightcoral;
+            color: black;
+          }
         }
       }
     }

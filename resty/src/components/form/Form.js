@@ -3,42 +3,63 @@ import React, { useState } from "react";
 
 import './form.scss';
 
-function Form({ callApi, setData }) {
-    const [method, setMethod] = useState({ method: 'GET' });
-    const [body,setBody]=useState('');
-    const handleSubmit = event => {
-        event.preventDefault();
-        const formData = {
-            method: method,
-            url: event.target[0].value,
-            body: body,
-
-        };
-        callApi(formData);
+function Form(props) {
+    const [click, setClick] = useState('GET');
+    const [url, setUrl] = useState('');
+    const [body, setBody] = useState('');
+  
+  
+    const handleSubmit = e => {
+      e.preventDefault();
+      const formData = {
+        method: click,
+        url: url,
+      };
+      const bodyData = {
+        body: body,
+      };
+      props.handleApiCall(formData, bodyData);
     }
-    function updateBody(e){
-        setBody(e.target.value)
-      }
-   
-
+  
+    const handelClick = e => {
+      e.preventDefault();
+      setClick(e.target.value);
+    }
+    const handelUrl = e => {
+      e.preventDefault();
+      setUrl(e.target.value);
+    }
+    const handleBody = e => {
+      e.preventDefault();
+      const formattedBody = JSON.stringify(JSON.parse(e.target.value), null, 2);
+      setBody(formattedBody);
+    }
+  
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <label >
-                    <span>URL: </span>
-                    <input name='url' type='text' />
-                    <button type="submit">GO!</button>
-                </label>
-                <label className="methods">
-                    <span onClick={() => setMethod('GET')} id="get">GET</span>
-                    <span onClick={() => setMethod('POST')} id="post">POST</span>
-                    <span onClick={() => setMethod('PUT')} id="put">PUT</span>
-                    <span onClick={() => setMethod('DELETE')} id="delete">DELETE</span>
-                </label>
-                {method === 'POST' || method === 'PUT' ? <input onInput={updateBody} name='text' type='text' /> : null}
-            </form>
-        </>
-    );
-}
-
-export default Form;
+      <>
+        <form onSubmit={handleSubmit}>
+          <label className='label-input'>
+            <span>URL: </span>
+            <input name='url' type='text' className='input' placeholder='Inter a URL' data-testid='input' onChange={handelUrl} />
+            <button type="submit" className='btn' data-testid='submit'>GO!</button>
+          </label>
+          <label for='styledSelect1' className='custom-select'>
+            <span>Choose a Method: </span>
+            <div className='btns'>
+              <div>
+                <select onChange={handelClick} id='styledSelect1' name='options'>
+                  <option id="get" data-testid='get' value='GET'>GET</option>
+                  <option id="post" data-testid='post' value='POST'>POST</option>
+                  <option id="put" data-testid='put' value='PUT'>PUT</option>
+                  <option id="delete" data-testid='delete' value='DELETE'>DELETE</option>
+                </select>
+              </div>
+            </div>
+          </label>
+          {click === 'POST' || click === 'PUT' ? <textarea className='text' onChange={handleBody} placeholder='Enter valid JSON' /> : null}
+        </form>
+      </>
+    )
+  }
+  
+  export default Form;

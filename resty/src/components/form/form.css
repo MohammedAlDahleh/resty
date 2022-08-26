@@ -1,24 +1,110 @@
+@charset "UTF-8";
 form {
-    display: inline-block;
-    margin: auto;
-    width: 200px;
-  }
-  
-  form label {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin: 1rem 0;
-  }
-  
-  form label.methods span {
-    cursor: pointer;
-    margin-right: 1rem;
-    padding: .25rem .5rem;
-    background: #ccc;
-  }
-  
-  form label.methods span:hover, form label.methods span.active {
-    background: #fff;
-  }
-  /*# sourceMappingURL=form.css.map */
+  display: grid;
+  margin: auto;
+  margin-top: 2%;
+  max-width: 500px;
+  padding: 1em;
+  background: #8b8b8b;
+  opacity: 95%;
+}
+form .text {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
+  align-items: center;
+  justify-items: center;
+  min-height: 100px;
+  outline: none;
+  resize: none;
+  font-family: monospace;
+  transition: background 0.25s, color 0.25s;
+}
+form .text:focus {
+  background: #4a4a4a;
+  color: #eeeeee;
+}
+form .text:hover {
+  background: #4a4a4a;
+  color: #eeeeee;
+}
+form .label-input-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
+  margin-bottom: 1em;
+  min-height: 100px;
+}
+form .label-input {
+  display: flex;
+  grid-gap: 0.5em;
+}
+form .input {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+form .btn {
+  cursor: pointer;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  width: 30%;
+  justify-content: center;
+  align-items: center;
+}
+form .btn:hover {
+  background: burlywood;
+}
+form label {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 0;
+  justify-content: center;
+  align-items: center;
+}
+form label.custom-select {
+  padding: 0.5em;
+  position: relative;
+  display: block;
+  max-width: 500px;
+  min-width: 180px;
+  margin: 0 auto;
+  border: 1px solid #6c6b6e;
+  background-color: #39383a;
+  z-index: 10;
+}
+form label.custom-select select {
+  border: none;
+  outline: none;
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  margin: 0;
+  display: block;
+  width: 100%;
+  padding: 12px 55px 15px 15px;
+  font-size: 14px;
+  color: #714bb9;
+}
+form label.custom-select select:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  line-height: 38px;
+  content: "∨";
+  text-align: center;
+  color: #714bb9;
+  font-size: 24px;
+  border-left: 1px solid #3c1c78;
+  z-index: -1;
+}/*# sourceMappingURL=form.css.map */

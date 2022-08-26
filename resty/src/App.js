@@ -1,88 +1,107 @@
-import React, { useState, useEffect,useReducer } from 'react';
 import './app.scss';
+import React, { useState, useEffect,useReducer } from 'react';
 import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
 import Form from './components/form/Form';
 import Results from './components/results/Result';
+import Footer from './components/footer/Footer';
+import History from './components/History/history';
+import reducer, { success, body, reqParams, history, getHistory } from './reducer';
+
+const initialState = {
+  data: [],
+  body: {},
+  reqParams: {},
+}
 function App() {
-  const [http, setHttp] = useState({ requestParams: {} });
-  const [data, setData] = useState('');
-  const[state,dispatch] =useReducer(historyReducer, 0);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [isLoading, setIsLoading] = useState(false);
 
 
-  function historyReducer(state,action){
-    state = console.log("historyReducer")  ;
-  }
-  
+  const callApi = async (formData, bodyData) => {
+    if (formData.method === 'GET') {
+      setIsLoading(true);
+      const response = await fetch(formData.url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setIsLoading(false);
+      dispatch(success(data));
+      dispatch(reqParams(formData));
+      dispatch(getHistory([formData.method, formData.url, data]));
+      console.log('Res GET :>> ', response);
 
+    } else if (formData.method === 'POST') {
+      setIsLoading(true);
+      const response = await fetch(formData.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: bodyData.body,
+      });
+      const bodyOutput = {
+        body: bodyData.body,
+      };
+      dispatch(body(bodyOutput.body));
+      dispatch(reqParams(formData));
+      setIsLoading(false);
+      dispatch(history([formData.method, formData.url, bodyOutput.body]));
+      console.log('Res POST :>> ', response);
 
-
-  const callApi = (formData) => {
-    setHttp({ ...http, requestParams: formData });
-  }
- 
-  let method = http.requestParams.method;
-  let url = http.requestParams.url
-  let body = http.requestParams.body;
-  useEffect(() => {
-    if (method) {
-      //////////////////////Get/////////////
-      if (method === 'GET') {
-        axios.get(url)
-        .then(res => {
-          // console.log(res.data.length);
-          const persons = {
-            header: res.headers,
-            data:res.data,
-            count:res.data.length,
-          };
-            setData(persons)
-          }).catch((err) => {
-            console.log(err);
-            setData({ stauts: "loading..." })
-          });
-
-          ///////////////////////Post///////////////////////
-      } if (method === 'POST') {
-       
-        
-      } if (method === 'PUT') {
-        axios.put(url,body)
-        .then(res =>  {
-          const persons = {
-            header: res.headers,
-            count: 1,
-            data:res.data
-          }
-          setData(persons)
-          })
-          .catch((e) => {
-            console.log(e);
-            setData({stauts:"loading..."})
-          });
-      } if (method === 'DELETE') {
-        console.log('DELETE');
-      }
-    } else {
-      console.log("please enter your method");
     }
+    else if (formData.method === 'PUT') {
+      setIsLoading(true);
+      const response = await fetch(formData.url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: bodyData.body,
+      });
+      const bodyOutput = {
+        body: bodyData.body,
+      };
+      dispatch(body(bodyOutput.body));
+      dispatch(reqParams(formData));
+      setIsLoading(false);
+      dispatch(history([formData.method, formData.url, bodyOutput.body]));
+      console.log('Res PUT :>> ', response);
 
-  }, [http])
+    } else if (formData.method === 'DELETE') {
+      setIsLoading(true);
+      const response = await fetch(formData.url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      dispatch(reqParams(formData));
+      setIsLoading(false);
+      dispatch(history([formData.method, formData.url, null]));
+      console.log('Res DELETE :>> ', response);
+    }
+  }
+
+  useEffect(() => {
+    dispatch(reqParams(state.reqParams));
+    dispatch(body(state.body));
+    dispatch(success(state.data));
+  }, [state.reqParams, state.body, state.data]);
+
   return (
-    <>
+    <div className="App">
       <Header />
-      <div>Request Method: {http.requestParams.method}</div>
-      <div>URL: {http.requestParams.url}</div>
-      <Form callApi={callApi} setData={setData}  /> 
-      <Results data={data} />
-      <div>
-        {
-          <button onClick={()=>dispatch({historyReducer})}>history</button>
-        }
-      </div>
+      <div className ="url">URL: {state.reqParams.url}</div>
+      <div className ="req" >Request Method: {state.reqParams.method}</div>
+      <Form handleApiCall={callApi} />
+      <Results data={state.data} method={state.reqParams.method} body={state.body} isLoading={isLoading} />
+      <History history={state.history} />
       <Footer />
-    </>
+    </div>
   );
 }
-//setBody={setBody}
+
 export default App;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect,useReducer } from 'react';
-import axios from "axios";
 import './app.scss';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';

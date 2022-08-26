@@ -1,3 +1,4 @@
+
 import './app.scss';
 import React, { useState, useEffect,useReducer } from 'react';
 import Header from './components/header/Header';
@@ -94,6 +95,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+
       <div className ="url">URL: {state.reqParams.url}</div>
       <div className ="req" >Request Method: {state.reqParams.method}</div>
       <Form handleApiCall={callApi} />
@@ -105,3 +107,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,5 +1,6 @@
 html,
 body {
+
   min-height: 100%;
   margin: 0;
   padding: 0;
@@ -9,6 +10,7 @@ body #root {
   flex-direction: column;
   height: 100%;
 }
+
 body footer {
   background: black;
   border-top: 1px solid #2a2828;
@@ -16,6 +18,7 @@ body footer {
   margin: 0;
   color: #eee;
   opacity: 95%;
+
   bottom: 0;
   position: relative;
 }
@@ -24,7 +27,9 @@ body header {
   border-bottom: 1px solid #2a2828;
   color: #eee;
   padding: 10px;
+
   margin-bottom: 0;
+
   text-align: center;
   opacity: 95%;
 }
